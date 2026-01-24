@@ -1,0 +1,16 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.python-version
+
+# Data and DB (Keep the repo light!)
+*.csv
+*.csv.gz
+*.parquet
+ny_taxi_postgres_data/
+
+# Docker / IDE
+.docker/
+.vscode/
+.DS_Store
