@@ -424,7 +424,10 @@ triggers:
 ### Question 2: Rendered Variable
 Testing Kestra's expression engine with inputs: `taxi: green`, `year: 2020`, `month: 04`.  
 The rendered string follows the pattern: 
-`{{inputs.taxi}}_tripdata_{{inputs.year}}-{{inputs.month}}.csv`
+
+```yaml
+{{inputs.taxi}}_tripdata_{{inputs.year}}-{{inputs.month}}.csv
+```
 
 ### Question 3
 ### 🔄 Iterative Ingestion Strategy
@@ -460,6 +463,6 @@ WHERE filename = 'yellow_tripdata_2021-03.csv';
 triggers:
   - id: daily_schedule
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "0 9 * * *" # Runs at 9:00 AM
-    timezone: America/New_York # Ensures 9 AM NY time regardless of DST
+    cron: "0 9 * * *" 
+    timezone: America/New_York # <-- 
 ```
