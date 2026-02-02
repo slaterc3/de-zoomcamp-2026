@@ -21,6 +21,14 @@ variables:
   data: "{{outputs.extract.outputFiles[inputs.taxi ~ '_tripdata_' ~ (trigger.date | date('yyyy-MM')) ~ '.csv']}}"
 
 tasks:
+  - id: truncate_staging
+    type: io.kestra.plugin.jdbc.postgresql.Queries
+    url: jdbc:postgresql://pgdatabase:5432/ny_taxi
+    username: root
+    password: root
+    sql: |
+      TRUNCATE TABLE public.yellow_tripdata_staging;
+
   - id: set_label
     type: io.kestra.plugin.core.execution.Labels
     labels:
