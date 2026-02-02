@@ -23,7 +23,7 @@
 ### Question 1: Uncompressed File Size of Yellow Taxi data for Dec. 2020
 
 The first step was to use Kestra to do a backfill on the Yellow taxi data for December 2020:
-![Backfill data](/workspaces/de-zoomcamp-2026/week_2/homework/images/1-backfill.jpg)
+![Backfill data](./images/1-backfill.jpg)
 
 ### Question 2: Rendered Variable
 Testing Kestra's expression engine with inputs: `taxi: green`, `year: 2020`, `month: 04`.  
