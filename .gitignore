@@ -14,3 +14,7 @@ ny_taxi_postgres_data/
 .docker/
 .vscode/
 .DS_Store
+
+google_credentials.json
+de-zoomcamp-105558-a8b7fbb21cf4.json
+*.json 
