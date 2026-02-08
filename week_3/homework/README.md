@@ -3,7 +3,7 @@
 **Database:** Google Cloud Storage
 **Environment:** GitHub Codespaces
 
-## Homework Answers
+## Homework Answers (Work, Screenshots, and Explanations below)
 
 **Q1**: 20,332,093
 
@@ -13,7 +13,7 @@
 
 **Q4**: 8,333
 
-**Q5**:
+**Q5**: Partition by tpep_dropoff_datetime and Cluster on VendorID
 
 **Q6**:
 
@@ -83,8 +83,13 @@ How many records have a fare_amount of 0?
 
 What is the best strategy to make an optimized table in Big Query if your query will always filter based on tpep_dropoff_datetime and order the results by VendorID (Create a new table with this strategy)
 
-- Partition by tpep_dropoff_datetime and Cluster on VendorID
-- Cluster on by tpep_dropoff_datetime and Cluster on VendorID
+- Partition by tpep_dropoff_datetime and Cluster on VendorID $\leftarrow$ **answer**
+- Cluster on by tpep_dropoff_datetime and Cluster on VendorID 
 - Cluster on tpep_dropoff_datetime Partition by VendorID
 - Partition by tpep_dropoff_datetime and Partition by VendorID
+
+*We Partition on <u>tpep_dropoff_datetime</u> as it has a reasonalble cardinality and we can filter on that column. VendorID, on the other hand, will be used for sorting, so is an ideal candidate for Clustering*
+
+### Partitioned & Clustered DDL
+![Partitioned & Clustered DDL](./images/q5.jpg)
 
