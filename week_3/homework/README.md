@@ -15,13 +15,13 @@
 
 **Q5**: Partition by tpep_dropoff_datetime and Cluster on VendorID
 
-**Q6**:
+**Q6**: Non-Partitioned $\approx$ 310MB | Partioned $\approx$ 26MB
 
-**Q7**:
+**Q7**: Google Cloud Storage **Bucket**
 
-**Q8**:
+**Q8**: True
 
-**Q9**:
+**Q9**: 0MB
 
 ## Question 1. Counting records
 
@@ -93,3 +93,45 @@ What is the best strategy to make an optimized table in Big Query if your query 
 ### Partitioned & Clustered DDL
 ![Partitioned & Clustered DDL](./images/q5.jpg)
 
+## Question 6. Partition benefits
+
+Write a query to retrieve the distinct VendorIDs between tpep_dropoff_datetime
+2024-03-01 and 2024-03-15 (inclusive)
+
+- 12.47 MB for non-partitioned table and 326.42 MB for the partitioned table
+- 310.24 MB for non-partitioned table and 26.84 MB for the partitioned table $\leftarrow$ **Answer** 
+- 5.87 MB for non-partitioned table and 0 MB for the partitioned table
+- 310.31 MB for non-partitioned table and 285.64 MB for the partitioned table
+
+### Non-Partitinoned Estimation
+![non-partitioned table](./images/q6-a.jpg)
+
+### Partioned Table Estimation
+![partitioned table](./images/q6-b.jpg)
+
+## Question 7. External table storage
+
+Where is the data stored in the External Table you created?
+
+- Big Query
+- Container Registry
+- GCP Bucket $\leftarrow$ **Answer**
+- Big Table
+
+*The data remains in the <u>GCP Storage Bucket</u>. The external table in BigQuery points to the Parquet files in the bucket.*
+
+## Question 8. Clustering best practices
+
+It is best practice in Big Query to always cluster your data:
+- True $\leftarrow$ **Answer**
+- False 
+
+*True. Not always strictly required but it requires no manual maintenance and optimizes query performance. It also does increase storage costs*
+
+## Question 9. Understanding table scans
+
+No Points: Write a `SELECT count(*)` query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
+
+**Answer** 0MB - BigQuery can access the row count from the metadata.
+
+![SELECT COUNT(*) on Materialized Table](./images/q9.jpg)
