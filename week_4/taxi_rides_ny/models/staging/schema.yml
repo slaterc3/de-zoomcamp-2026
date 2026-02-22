@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: staging
+    database: de-zoomcamp-105558 
+    schema: zoomcamp
+
+    tables:
+      - name: green_tripdata
+      - name: yellow_tripdata
+      - name: payment_type_lookup
+      - name: fhv_tripdata
+        loaded_at_field: pickup_datetime
+        freshness:
+          warn_after: {count: 1, period: hour}
+          error_after: {count: 24, period: hour}
