@@ -1,0 +1,49 @@
+id: 10_fhv_ingestion
+namespace: zoomcamp
+
+inputs:
+  - id: year
+    type: STRING
+    defaults: "2019"
+  - id: month
+    type: STRING
+    defaults: "01"
+
+variables:
+  file_name: "fhv_tripdata_{{inputs.year}}-{{inputs.month}}.csv.gz"
+  src_url: "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/fhv_tripdata_{{inputs.year}}-{{inputs.month}}.csv.gz"
+  gcs_object_path: "fhv/{{inputs.year}}/fhv_tripdata_{{inputs.year}}-{{inputs.month}}.csv.gz"
+  bq_table: "{{kv('GCP_PROJECT_ID')}}.zoomcamp.fhv_tripdata"
+
+tasks:
+  - id: download_file
+    type: io.kestra.plugin.core.http.Download
+    uri: "{{render(vars.src_url)}}"
+
+  - id: upload_to_gcs
+    type: io.kestra.plugin.gcp.gcs.Upload
+    from: "{{outputs.download_file.uri}}"
+    to: "{{render(vars.gcs_object_path)}}"
+
+  - id: bq_load
+    type: io.kestra.plugin.gcp.bigquery.Load
+    destinationTable: "{{render(vars.bq_table)}}"
+    format: CSV
+    autodetect: true
+    from: "gs://{{kv('GCP_BUCKET_NAME')}}/{{render(vars.gcs_object_path)}}"
+    csvOptions:
+      allowJaggedRows: true
+    writeDisposition: WRITE_APPEND
+
+triggers:
+  - id: daily_schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 9 * * *"
+
+pluginDefaults:
+  - type: io.kestra.plugin.gcp
+    values:
+      serviceAccount: "{{kv('GCP_CREDS')}}"
+      projectId: "{{kv('GCP_PROJECT_ID')}}"
+      location: "{{kv('GCP_LOCATION')}}"
+      bucket: "{{kv('GCP_BUCKET_NAME')}}"
